@@ -1,0 +1,15 @@
+#+STARTUP: showall
+
+* install [nix]
+
+* programming
+** haskell
+** clojure
+** nix
+** rust
+** java
+
+* plugin cheetsheet
+** dante
+** cider
+** flymake

@@ -1,9 +1,9 @@
 (require 'package)
 
-(setq url-proxy-services
-   '(("no_proxy" . "^\\(localhost\\|10\\..*\\|192\\.168\\..*\\)")
-     ("http" . "localhost:8118")
-     ("https" . "localhost:8118")))
+;; (setq url-proxy-services
+;;   '(("no_proxy" . "^\\(localhost\\|10\\..*\\|192\\.168\\..*\\)")
+;;     ("http" . "localhost:8118")
+;;     ("https" . "localhost:8118")))
 
 (setq package-check-signature nil)
 (setq package-archives
@@ -19,6 +19,11 @@
 (dolist (package '(paredit dante cider lsp-java))
   (unless (package-installed-p package)
     (package-install package)))
+
+
+(add-hook 'emacs-lisp-mode-hook #'enable-paredit-mode)
+(add-hook 'lisp-mode-hook #'enable-paredit-mode)
+(add-hook 'clojure-mode-hook #'enable-paredit-mode)
 
 
 (custom-set-variables
