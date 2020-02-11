@@ -13,18 +13,32 @@
 
 (package-initialize)
 
+(electric-indent-mode 0)
 (unless package-archive-contents
   (package-refresh-contents))
 
 (dolist (package '(paredit restclient
-		   dante cider lsp-java))
+                   dap-mode lsp-java
+        		   dante cider 
+                   ))
   (unless (package-installed-p package)
     (package-install package)))
 
+(setq-default indent-tabs-mode nil)
+(setq-default tab-width 4)
 
 (add-hook 'emacs-lisp-mode-hook #'enable-paredit-mode)
 (add-hook 'lisp-mode-hook #'enable-paredit-mode)
 (add-hook 'clojure-mode-hook #'enable-paredit-mode)
 
+;; -----------------
+;; java mode
+;; -----------------
+(require 'dap-java)
 (require 'lsp-java)
 (add-hook 'java-mode-hook #'lsp)
+(add-hook 'java-mode-hook (lambda ()
+                            (setq c-default-style "java")
+                            (setq c-basic-offset 4)
+                            (display-line-numbers-mode t)
+                            ))
