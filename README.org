@@ -1,6 +1,11 @@
 #+STARTUP: showall
 
 * install [nix]
+#+BEGIN_SRC sh
+  nix-channel --add https://nixos.org/channels/nixos-19.09
+  nix-channel --update
+  nix-env -f ~/.nix-defexpr/channels/nixos-19.09 -iA emacs
+#+END_SRC
 
 * programming
 ** haskell
@@ -8,6 +13,15 @@
 ** nix
 ** rust
 ** java
+- 1. install and config maven
+#+BEGIN_SRC sh
+  nix-env -f ~/.nix-defexpr/channels/nixos-19.09 -iA maven
+  cp maven-conf/settings.xml ~/.m2/settings.xml
+#+END_SRC
+- 1. create maven project
+#+BEGIN_SRC sh
+  mvn -B archetype:generate -DgroupId=larluo -DartifactId=data-ingestion -DarchetypeArtifactId=maven-archetype-quickstart -DarchetypeCatalog=local
+#+END_SRC  
 
 * plugin cheetsheet
 ** dante
