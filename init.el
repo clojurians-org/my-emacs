@@ -13,7 +13,7 @@
 
 (package-initialize)
 
-(electric-indent-mode 0)
+
 (unless package-archive-contents
   (package-refresh-contents))
 
@@ -24,8 +24,13 @@
   (unless (package-installed-p package)
     (package-install package)))
 
+;; -----------------
+;; common
+;; -----------------
+(electric-indent-mode 0)
 (setq-default indent-tabs-mode nil)
 (setq-default tab-width 4)
+(custom-set-variables '(lsp-enable-on-type-formatting nil))
 
 (add-hook 'emacs-lisp-mode-hook #'enable-paredit-mode)
 (add-hook 'lisp-mode-hook #'enable-paredit-mode)
