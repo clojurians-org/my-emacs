@@ -1,9 +1,9 @@
 (require 'package)
 
 ;; (setq url-proxy-services
-;;   '(("no_proxy" . "^\\(localhost\\|10\\..*\\|192\\.168\\..*\\)")
-;;     ("http" . "localhost:8118")
-;;     ("https" . "localhost:8118")))
+;;       '(("no_proxy" . "^\\(localhost\\|10\\..*\\|192\\.168\\..*\\)")
+;;         ("http" . "localhost:8118")
+;;         ("https" . "localhost:8118")))
 
 (setq package-check-signature nil)
 (setq package-archives
@@ -17,7 +17,7 @@
 (unless package-archive-contents
   (package-refresh-contents))
 
-(dolist (package '(paredit restclient
+(dolist (package '(paredit restclient json-mode
                    dap-mode lsp-java
         		   dante cider 
                    ))
@@ -30,11 +30,13 @@
 (electric-indent-mode 0)
 (setq-default indent-tabs-mode nil)
 (setq-default tab-width 4)
+(setq-default truncate-lines t)
 (custom-set-variables '(lsp-enable-on-type-formatting nil))
 
 (add-hook 'emacs-lisp-mode-hook #'enable-paredit-mode)
 (add-hook 'lisp-mode-hook #'enable-paredit-mode)
 (add-hook 'clojure-mode-hook #'enable-paredit-mode)
+(add-hook 'json-mode-hook #'lsp)
 
 ;; -----------------
 ;; java mode
