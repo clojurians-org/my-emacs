@@ -17,7 +17,7 @@
 (unless package-archive-contents
   (package-refresh-contents))
 
-(dolist (package '(paredit restclient json-mode
+(dolist (package '(paredit restclient json-mode typescript-mode
                    dap-mode lsp-java
         		   dante cider 
                    ))
@@ -31,12 +31,17 @@
 (setq-default indent-tabs-mode nil)
 (setq-default tab-width 4)
 (setq-default truncate-lines t)
-(custom-set-variables '(lsp-enable-on-type-formatting nil))
+(custom-set-variables
+ '(lsp-enable-on-type-formatting nil)
+)
 
 (add-hook 'emacs-lisp-mode-hook #'enable-paredit-mode)
 (add-hook 'lisp-mode-hook #'enable-paredit-mode)
 (add-hook 'clojure-mode-hook #'enable-paredit-mode)
 (add-hook 'json-mode-hook #'lsp)
+
+(add-to-list 'auto-mode-alist '("\\.tsx\\'" . typescript-mode))
+(add-hook 'typescript-mode-hook #'lsp)
 
 ;; -----------------
 ;; java mode
