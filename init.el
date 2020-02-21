@@ -43,6 +43,7 @@
 (add-to-list 'auto-mode-alist '("\\.tsx\\'" . typescript-mode))
 (add-hook 'typescript-mode-hook #'lsp)
 
+(add-hook 'conf-mode-hook (lambda () (display-line-numbers-mode t))) 
 ;; -----------------
 ;; java mode
 ;; -----------------
