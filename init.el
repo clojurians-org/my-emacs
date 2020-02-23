@@ -18,8 +18,9 @@
   (package-refresh-contents))
 
 (dolist (package '(paredit restclient json-mode typescript-mode
-                   dap-mode lsp-java gradle-mode
-        		   dante cider
+                   dap-mode lsp-java lsp-haskell
+                   cider gradle-mode 
+        		   dante
                    ))
   (unless (package-installed-p package)
     (package-install package)))
@@ -31,24 +32,50 @@
 (setq-default indent-tabs-mode nil)
 (setq-default tab-width 4)
 (setq-default truncate-lines t)
-(custom-set-variables
- '(lsp-enable-on-type-formatting nil))
 
 (add-hook 'emacs-lisp-mode-hook #'enable-paredit-mode)
 (add-hook 'lisp-mode-hook #'enable-paredit-mode)
 (add-hook 'clojure-mode-hook #'enable-paredit-mode)
-(add-hook 'json-mode-hook #'lsp)
-
-(add-to-list 'auto-mode-alist '("\\.tsx\\'" . typescript-mode))
-(add-hook 'typescript-mode-hook #'lsp)
-
 (add-hook 'conf-mode-hook (lambda () (display-line-numbers-mode t))) 
 
+;; -----------------
+;; common lsp
+;; -----------------
+(require 'lsp)
 (setq lsp-file-watch-ignored
   '(".idea" ".ensime_cache" ".eunit" "node_modules"
             ".git" ".hg" ".fslckout" "_FOSSIL_"
             ".bzr" "_darcs" ".tox" ".svn" ".stack-work"
             "build"))
+(custom-set-variables
+ '(lsp-enable-on-type-formatting nil)
+)
+
+;; -----------------
+;; json mode
+;; -----------------
+(add-hook 'json-mode-hook #'lsp)
+
+;; -----------------
+;; typescript mode
+;; -----------------
+(add-to-list 'auto-mode-alist '("\\.tsx\\'" . typescript-mode))
+(add-hook 'typescript-mode-hook #'lsp)
+
+;; -----------------
+;; haskell mode
+;; -----------------
+;; (require 'lsp-haskell)
+;; (add-hook 'haskell-mode-hook #'lsp)
+(use-package dante
+  :ensure t
+  :after haskell-mode
+  :commands 'dante-mode
+  :init
+  (add-hook 'haskell-mode-hook 'flycheck-mode)
+  (add-hook 'haskell-mode-hook 'dante-mode)
+  )
+
 ;; -----------------
 ;; java mode
 ;; -----------------
@@ -72,5 +99,4 @@
                             (display-line-numbers-mode t)
                             (gradle-mode 1)
                             ))
-
 
