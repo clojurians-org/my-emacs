@@ -17,10 +17,10 @@
 (unless package-archive-contents
   (package-refresh-contents))
 
-(dolist (package '(paredit restclient json-mode typescript-mode
+(dolist (package '(paredit restclient 
+                   json-mode typescript-mode vue-mode vue-html-mode
                    dap-mode lsp-java lsp-haskell
-                   cider gradle-mode 
-        		   dante
+                   dante cider gradle-mode nix-mode
                    ))
   (unless (package-installed-p package)
     (package-install package)))
@@ -28,6 +28,7 @@
 ;; -----------------
 ;; common
 ;; -----------------
+(require 'flycheck)
 (electric-indent-mode 0)
 (setq-default indent-tabs-mode nil)
 (setq-default tab-width 4)
@@ -37,6 +38,13 @@
 (add-hook 'lisp-mode-hook #'enable-paredit-mode)
 (add-hook 'clojure-mode-hook #'enable-paredit-mode)
 (add-hook 'conf-mode-hook (lambda () (display-line-numbers-mode t))) 
+
+
+;; -----------------
+;; nix mode
+;; -----------------
+(use-package nix-mode
+  :mode "\\.nix\\'")
 
 ;; -----------------
 ;; common lsp
@@ -61,6 +69,16 @@
 ;; -----------------
 (add-to-list 'auto-mode-alist '("\\.tsx\\'" . typescript-mode))
 (add-hook 'typescript-mode-hook #'lsp)
+
+;; -----------------
+;; vue mode
+;; -----------------
+;; yarn global add vue-language-server
+;; yarn global add vscode-css-languageserver-bin
+(add-hook 'vue-mode-hook #'lsp)
+(with-eval-after-load 'lsp-mode
+  (mapc #'lsp-flycheck-add-mode '(typescript-mode js-mode css-mode vue-html-mode)))
+
 
 ;; -----------------
 ;; haskell mode
