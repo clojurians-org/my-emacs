@@ -46,7 +46,7 @@
 (use-package nix-mode
   :mode "\\.nix\\'"
   :init 
-  (add-hook 'haskell-mode-hook 'flycheck-mode))
+  (add-hook 'nix-mode-hook 'flycheck-mode))
 
 ;; -----------------
 ;; common lsp
