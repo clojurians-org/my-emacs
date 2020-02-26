@@ -44,7 +44,9 @@
 ;; nix mode
 ;; -----------------
 (use-package nix-mode
-  :mode "\\.nix\\'")
+  :mode "\\.nix\\'"
+  :init 
+  (add-hook 'haskell-mode-hook 'flycheck-mode))
 
 ;; -----------------
 ;; common lsp
@@ -78,7 +80,11 @@
 (add-hook 'vue-mode-hook #'lsp)
 (with-eval-after-load 'lsp-mode
   (mapc #'lsp-flycheck-add-mode '(typescript-mode js-mode css-mode vue-html-mode)))
-
+;; -----------------
+;; c mode
+;; -----------------
+;; nix-env -f ~/.nix-defexpr/channels/nixos-20.03 -iA clang-tools
+(add-hook 'c++-mode-hook #'lsp)
 
 ;; -----------------
 ;; haskell mode
@@ -100,7 +106,7 @@
 (require 'dap-java)
 (require 'lsp-java)
 
-;; nix-env -f nix-env -f ~/.nix-defexpr/channels/nixos-20.03 -iA lombok
+;; nix-env -f ~/.nix-defexpr/channels/nixos-20.03 -iA lombok
 (setq path-to-lombok (car (file-expand-wildcards "/nix/store/*-lombok-*/share/java/lombok.jar") ) )
 (setq lsp-java-vmargs
       `("-noverify"
